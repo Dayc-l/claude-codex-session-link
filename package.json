@@ -1,0 +1,10 @@
+{
+  "name": "claude-session-link",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Local Claude Code session reader and explicit text-only follow-ups for Codex",
+  "engines": { "node": ">=22" },
+  "scripts": { "test": "node --test test/*.test.mjs", "start": "node cli.mjs" }
+}

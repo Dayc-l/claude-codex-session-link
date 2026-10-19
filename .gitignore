@@ -1,0 +1,14 @@
+node_modules/
+.test-tmp/
+.state/
+.claude/
+.codex/
+.env
+.env.*
+!.env.example
+*.jsonl
+*.log
+*.zip
+*.npz
+*.sqlite
+*.sqlite-*
