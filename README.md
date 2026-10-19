@@ -1,12 +1,14 @@
-# 🔗 Claude Session Link
+# 🔗 Claude–Codex Session Link
 
 🌍 **[English](README.md) | [简体中文](README.zh-CN.md)**
 
-A local context bridge between **Claude Code** and **Codex**. Find and read saved Claude Code conversations, synchronize new messages before Codex replies, and explicitly ask Claude text-only follow-up questions in a selected session.
+A **Claude Code session reader and context synchronization MCP server for OpenAI Codex**. Find and read saved Claude Code conversations, synchronize new messages before Codex replies, and explicitly ask Claude text-only follow-up questions in a selected session—all while staying in your current workflow.
+
+Previously named **Claude Session Link**.
 
 **If this project helps you, please give it a ⭐ Star!** 💡 Suggestions, 🐛 bug reports, and 🛠️ improvements are welcome.
 
-![Claude Session Link framework](framework.png)
+![Claude–Codex Session Link: local session reading, incremental context sync, and optional follow-ups](framework.png)
 
 ## 🎯 Motivation
 
@@ -27,6 +29,12 @@ A local context bridge between **Claude Code** and **Codex**. Find and read save
 - Supports pagination and continuation of long incremental messages.
 - Uses stdio MCP / JSON-RPC, with no HTTP server or runtime npm dependencies.
 
+## 🧭 When to use it
+
+- **Continue your workflow:** inspect Claude Code's saved progress from Codex without copying and pasting conversation history.
+- **Share the latest context:** let Codex read incremental Claude session updates before it answers.
+- **Support Claude's work:** use Codex to review decisions, investigate problems, and prepare an optional follow-up question for Claude.
+
 ## 🧰 Requirements
 
 - Node.js 22 or newer. The local reader has been validated on Windows.
@@ -38,8 +46,8 @@ The reader uses `.claude/projects/<encoded-project-path>/<session-UUID>.jsonl` u
 ## 🚀 Quick start
 
 ```powershell
-git clone https://github.com/Dayc-l/claude-session-link.git
-cd claude-session-link
+git clone https://github.com/Dayc-l/claude-codex-session-link.git
+cd claude-codex-session-link
 node.exe cli.mjs list --limit 10
 node.exe cli.mjs list --project C:\Projects\demo --query cache
 node.exe cli.mjs read --session YOUR_FULL_SESSION_UUID
@@ -56,7 +64,7 @@ Merge the following entry into the trusted project's `.codex/config.toml`, repla
 ```toml
 [mcp_servers.claude_session_link]
 command = "node.exe"
-args = ["C:\\Tools\\claude-session-link\\cli.mjs", "mcp"]
+args = ["C:\\Tools\\claude-codex-session-link\\cli.mjs", "mcp"]
 ```
 
 Preserve existing configuration. Reload the client's MCP connection after setup. See [the configuration example](codex-config.example.toml). A helper can preview project configuration; `-Apply` explicitly creates it and refuses to overwrite different existing content:

@@ -1,10 +1,14 @@
 {
-  "name": "claude-session-link",
+  "name": "claude-codex-session-link",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "type": "module",
-  "description": "Local Claude Code session reader and explicit text-only follow-ups for Codex",
+  "description": "MCP server for OpenAI Codex to read Claude Code sessions, sync context, and ask explicit text-only follow-ups",
+  "homepage": "https://github.com/Dayc-l/claude-codex-session-link#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/Dayc-l/claude-codex-session-link.git" },
+  "bugs": { "url": "https://github.com/Dayc-l/claude-codex-session-link/issues" },
+  "keywords": ["claude-code", "codex", "openai-codex", "mcp", "context-sync", "session-management"],
   "engines": { "node": ">=22" },
   "scripts": { "test": "node --test test/*.test.mjs", "start": "node cli.mjs" }
 }

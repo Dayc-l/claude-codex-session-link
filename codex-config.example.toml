@@ -2,7 +2,7 @@
 # 若希望限定项目，可放入受信任项目的.codex/config.toml；用户级配置会对更多项目生效。
 [mcp_servers.claude_session_link]
 command = 'node.exe'
-args = ['C:/Tools/claude-session-link/cli.mjs', 'mcp']
+args = ['C:/Tools/claude-codex-session-link/cli.mjs', 'mcp']
 tool_timeout_sec = 360
 # 如需指定自定义profile或Claude原生exe，取消以下注释并填实际路径。
 # [mcp_servers.claude_session_link.env]

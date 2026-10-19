@@ -1,12 +1,14 @@
-# 🔗 Claude Session Link
+# 🔗 Claude–Codex Session Link
 
 🌍 **[English](README.md) | [简体中文](README.zh-CN.md)**
 
-连接**Claude Code**与**Codex**的本地上下文桥梁：发现并读取已保存的Claude对话，在Codex回答前同步新增内容，并在你明确要求时，基于选定会话向Claude继续提问。
+面向**OpenAI Codex**的**Claude Code会话读取与上下文同步MCP服务器**：发现并读取已保存的Claude对话，在Codex回答前同步新增内容，并在你明确要求时，基于选定会话向Claude继续提问，让跨工具协作融入当前工作流。
+
+项目原名为**Claude Session Link**。
 
 **如果这个项目对你有帮助，欢迎点一个⭐ Star！** 💡欢迎交流想法，🐛欢迎反馈问题，🛠️也欢迎一起改进。
 
-![Claude Session Link框架图](framework.png)
+![Claude–Codex Session Link框架图：本地会话读取、增量上下文同步和可选追问](framework.png)
 
 ## 🎯 项目动机
 
@@ -27,6 +29,12 @@
 - 支持分页读取，以及较长增量消息的连续读取。
 - 使用stdio MCP / JSON-RPC，无需启动HTTP服务，也没有运行时npm依赖。
 
+## 🧭 适用场景
+
+- **保持工作流连续：**在Codex中查看Claude Code已经保存的任务进展，无需复制粘贴对话历史。
+- **同步最新上下文：**让Codex在回答前读取Claude会话的新增内容。
+- **辅助Claude工作：**借助Codex核对方案、分析问题，并在需要时准备向Claude发送的文字追问。
+
 ## 🧰 环境要求
 
 - Node.js 22或更高版本；本地读取功能已在Windows验证。
@@ -38,8 +46,8 @@
 ## 🚀 快速开始
 
 ```powershell
-git clone https://github.com/Dayc-l/claude-session-link.git
-cd claude-session-link
+git clone https://github.com/Dayc-l/claude-codex-session-link.git
+cd claude-codex-session-link
 node.exe cli.mjs list --limit 10
 node.exe cli.mjs list --project C:\Projects\demo --query 缓存
 node.exe cli.mjs read --session 完整会话UUID
@@ -56,7 +64,7 @@ node.exe cli.mjs read --session 完整会话UUID
 ```toml
 [mcp_servers.claude_session_link]
 command = "node.exe"
-args = ["C:\\Tools\\claude-session-link\\cli.mjs", "mcp"]
+args = ["C:\\Tools\\claude-codex-session-link\\cli.mjs", "mcp"]
 ```
 
 保留已有配置，完成后重新加载客户端的MCP连接。也可参考[配置示例](codex-config.example.toml)。辅助脚本默认预览；显式增加`-Apply`才创建项目配置，遇到不同的已有内容会停止：
