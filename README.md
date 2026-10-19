@@ -8,13 +8,15 @@ Previously named **Claude Session Link**.
 
 **If this project helps you, please give it a ⭐ Star!** 💡 Suggestions, 🐛 bug reports, and 🛠️ improvements are welcome.
 
-![Claude–Codex Session Link: local session reading, incremental context sync, and optional follow-ups](framework.png)
+![Keep your flow: let Codex help Claude without switching windows or copying conversation history](motivation.png)
 
 ## 🎯 Motivation
 
 **Keep your workflow uninterrupted, and let Codex help you support Claude's ongoing work.** Instead of repeatedly switching windows and copying conversation history, stay in Codex and use Claude's saved context to review progress, understand decisions, investigate problems, and plan the next step. When you want Claude's own explanation, send an explicit text-only follow-up in the selected context.
 
 ## ✨ What it does
+
+![Four ways to use Claude–Codex Session Link: catch up on progress, stay up to date, get a second perspective, and ask Claude in context](capabilities.png)
 
 | Tool | Purpose | Behavior |
 | --- | --- | --- |
@@ -122,6 +124,15 @@ All 21 offline tests passed for the uploaded source. They use synthetic local se
 Real authenticated network follow-ups have not been verified end to end. Client-specific automatic MCP loading also depends on the installation. See [validation details](VALIDATION.md) and [the changelog](CHANGELOG.md).
 
 The parser targets locally observed JSONL formats rather than an official internal SDK. It cannot restore discarded history or unsaved content. Full reads reject session files over 128 MiB; individual read messages and pages have output limits. Incremental output supports continuation of long messages.
+
+## 🏗️ Technical framework
+
+<details>
+<summary>Expand the full architecture diagram</summary>
+
+![Claude–Codex Session Link: local session reading, incremental context sync, and optional follow-ups](framework.png)
+
+</details>
 
 ## 🔒 Repository and data
 
