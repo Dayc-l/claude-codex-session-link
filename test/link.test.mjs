@@ -140,7 +140,7 @@ test('MCP handshake, tools, read and errors have clean newline JSON framing', as
   assert.equal((await waitFor(1)).result.serverInfo.name, 'claude-session-link');
   input.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
   input.write(JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'tools/list' }) + '\n');
-  assert.equal((await waitFor(2)).result.tools.length, 4);
+  assert.equal((await waitFor(2)).result.tools.length, 5);
   input.write(JSON.stringify({ jsonrpc: '2.0', id: 3, method: 'tools/call', params: { name: 'claude_read_session', arguments: { sessionId: ID } } }) + '\n');
   assert.equal(JSON.parse((await waitFor(3)).result.content[0].text).messages.length, 2);
   input.write(JSON.stringify({ jsonrpc: '2.0', id: 4, method: 'tools/call', params: { name: 'claude_sessions', arguments: { send: true } } }) + '\n');
