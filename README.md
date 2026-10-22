@@ -20,7 +20,8 @@ Previously named **Claude Session Link**.
 
 | Tool | Purpose | Behavior |
 | --- | --- | --- |
-| `claude_sessions` | List and search local conversations | Read-only; returns choices for the user |
+| `claude_sessions` | List and search local conversations | Read-only metadata; listing does not select a session |
+| `claude_select_session` | Open a session picker and wait for submission | Read-only metadata; waits for client form confirmation |
 | `claude_read_session` | Read a selected conversation | Read-only; follows the current message parent chain |
 | `claude_session_updates` | Retrieve new or revised context with a cursor | Read-only; called before replies after session selection |
 | `claude_ask_session` | Ask a text-only follow-up in that context | Preview by default; explicit sending invokes Claude CLI |
@@ -76,7 +77,11 @@ Preserve existing configuration. Reload the client's MCP connection after setup.
 .\scripts\connect-project.ps1 -ProjectPath C:\Projects\demo -Apply
 ```
 
-You can then tell Codex: “Let me choose a Claude session.” Select a candidate by its title, project, and time; the selected full session ID remains specific to this chat.
+You can then tell Codex: “Let me choose a Claude session.” Codex should call `claude_select_session`, which requests an MCP single-select form using `elicitation/create`. Select a candidate by its title, project, and time, then click to submit. The tool waits for the client to return an accepted submission before returning `status=selected` and the full session ID. Even a single candidate requires confirmation, and no default is supplied. The form includes previous/next page options when needed. The target remains specific to the current chat.
+
+Closing, cancelling, declining, invalid input, or a timeout never selects a session or automatically retries. While selection is pending, the server rejects concurrent reads, synchronization, sends, and additional selection requests. The client must advertise MCP form elicitation support; unsupported clients receive an explicit error instead of a transient async question or numbered-reply fallback. The client renders the UI; the server validates the submission but cannot independently prove a physical mouse click.
+
+The server has no selection countdown, but the host can cancel or time out the tool. Add `tool_timeout_sec = 360` to this MCP server entry (as in the configuration example) to allow a six-minute tool-call window. A timeout requires a new selection request and never accepts a preselected value. Reload the MCP connection or start a new chat after updating so Codex discovers the new tool and instructions. The desktop click interaction still needs validation in the actual client.
 
 ## 🔄 Default synchronization before replies
 
@@ -116,10 +121,10 @@ Actual sending accesses the network, consumes Claude usage, and lets Claude CLI 
 ## 🧪 Validation and limitations
 
 ```powershell
-node.exe --test test/link.test.mjs
+node.exe --test test/*.test.mjs
 ```
 
-All 21 offline tests passed for the uploaded source. They use synthetic local sessions and fake Claude responses. Coverage includes read-only behavior, parent chains, partial writes, pagination, MCP framing, incremental cursors, branch changes, compaction, text revisions, and long-message continuation.
+All 35 offline tests passed. They use synthetic local sessions and fake Claude responses. Coverage includes read-only behavior, parent chains, partial writes, pagination, MCP framing, incremental cursors, branch changes, compaction, text revisions, and long-message continuation. Selection tests also cover waiting for form submission, confirmation, cancellation, decline, capability negotiation, pagination, invalid results, cancellation cleanup, concurrent-operation blocking, and the actual stdio subprocess transport.
 
 Real authenticated network follow-ups have not been verified end to end. Client-specific automatic MCP loading also depends on the installation. See [validation details](VALIDATION.md) and [the changelog](CHANGELOG.md).
 
